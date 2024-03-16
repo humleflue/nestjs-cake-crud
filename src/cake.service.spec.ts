@@ -15,14 +15,14 @@ describe('CakeService', () => {
 
   describe('getCakeById called with id 1', () => {
     it('should return brownie cake!', () => {
-      // TODO: Figure out why the signiture isn't 'Cake | undefined' but just 'Cake'
+      // TODO: Figure out why the signature isn't 'Cake | undefined' but just 'Cake'
+      // (non-optional access to .kind is allowed here but shouldn't be)
       expect(cakeService.getCakeById(1).kind).toBe("brownie");
     });
   });
 
   describe('getCakeById called with id 99', () => {
     it('should return undefined', () => {
-      // TODO: Figure out why the signiture isn't 'Cake | undefined' but just 'Cake'
       expect(cakeService.getCakeById(99)?.kind).toBeUndefined();
     });
   });

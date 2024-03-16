@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-// TODO: Ugly as f*ck..? Necessary as NestJS does not test any types for us in requests, so we manually have to do it.
+// TODO: Ugly as f*ck..? Necessary as NestJS does not validate types for us in requests, so we manually have to do it.
 // Now we suddenly need to check stuff that essentially easily could be handled by the controller, when the request is recieved
 const cakeKinds = ["chokolate", "brownie", "strawberry", "kaj"] as const
 export type CakeKind = (typeof cakeKinds)[number] 
@@ -32,12 +32,17 @@ export class CakeService {
   }
 
   updateCake(cake: Cake):  Cake | undefined {
+    let result: Cake | undefined
+
     const dbCakeIndex = cakes.findIndex(c => c.id === cake.id)
     if(dbCakeIndex !== -1 && isValidCakeKind(cake.kind)) {
         cakes[dbCakeIndex] = cake
-        return cakes[dbCakeIndex]
+        result = cakes[dbCakeIndex]
+    } else {
+        result = undefined
     }
-    return undefined
+
+    return result
   }
 
   removeCake(id: number) {
